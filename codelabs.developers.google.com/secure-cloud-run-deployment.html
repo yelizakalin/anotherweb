@@ -1,0 +1,1465 @@
+<!doctype html>
+<html 
+      lang="en"
+      dir="ltr">
+  
+<!-- Mirrored from codelabs.developers.google.com/secure-cloud-run-deployment by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 05 Mar 2023 16:37:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="google-signin-client-id" content="721724668570-nbkv1cfusk7kk4eni4pjvepaus73b13t.apps.googleusercontent.com">
+    <meta name="google-signin-scope"
+          content="profile email">
+    <meta property="og:site_name" content="Google Codelabs">
+    <meta property="og:type" content="website"><meta name="theme-color" content="#1a73e8"><meta charset="utf-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <link rel="manifest" href="https://codelabs.developers.google.com/_pwa/codelabs/manifest.json"
+          crossorigin="use-credentials">
+    <link rel="preconnect" href="http://www.gstatic.com/" crossorigin>
+    <link rel="preconnect" href="http://fonts.gstatic.com/" crossorigin>
+    <link rel="preconnect" href="http://fonts.googleapis.com/" crossorigin>
+    <link rel="preconnect" href="http://apis.google.com/" crossorigin>
+    <link rel="preconnect" href="http://www.google-analytics.com/" crossorigin><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700&amp;display=swap">
+      <link rel="stylesheet"
+            href="http://fonts.googleapis.com/css2?family=Material+Icons&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=block"><link rel="stylesheet" href="https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/css/app.css">
+      <link rel="shortcut icon" href="https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/images/favicon.png">
+    <link rel="apple-touch-icon" href="https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/images/touchicon-180.png"><link rel="canonical" href="secure-cloud-run-deployment.html"><link rel="search" type="application/opensearchdescription+xml"
+            title="Google Codelabs" href="https://codelabs.developers.google.com/s/opensearch.xml">
+      <link rel="alternate" hreflang="en"
+          href="secure-cloud-run-deployment.html" /><link rel="alternate" hreflang="x-default" href="secure-cloud-run-deployment.html" /><title>Securely Deploying to Cloud Run &nbsp;|&nbsp; Google Codelabs</title>
+
+<meta property="og:title" content="Securely Deploying to Cloud Run &nbsp;|&nbsp; Google Codelabs"><meta name="description" content="Fundamental Practices for Securely Deploying to Cloud Run">
+  <meta property="og:description" content="Fundamental Practices for Securely Deploying to Cloud Run"><meta property="og:url" content="secure-cloud-run-deployment.html"><meta property="og:locale" content="en">
+  
+    
+    
+    
+    <meta name="original_source" content="https://docs.google.com/document/d/1JfX1QpVL3aTeLHH3PCONbFbRIf-M25g8unDpd-jrTe0/edit" />
+    
+    
+    
+    
+    
+    
+  
+
+    
+      <link rel="stylesheet" href="https://codelabs.developers.google.com/extras.css"></head>
+  <body class=""
+        template="codelab"
+        theme="codelabs-theme"
+        type="codelab"
+        
+        
+        
+        layout="docs"
+        
+        
+        
+        pending>
+    <devsite-progress type="indeterminate" id="app-progress"></devsite-progress>
+  
+    <section class="devsite-wrapper"><devsite-header>
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="devsite-header--inner nocontent">
+  <div class="devsite-top-logo-row-wrapper-wrapper">
+    <div class="devsite-top-logo-row-wrapper">
+      <div class="devsite-top-logo-row">
+        <button type="button" id="devsite-hamburger-menu"
+          class="devsite-header-icon-button button-flat material-icons gc-analytics-event"
+          data-category="Site-Wide Custom Events"
+          data-label="Navigation menu button"
+          visually-hidden
+          aria-label="Open menu">
+        </button>
+        <div class="devsite-product-name-wrapper">
+
+  <a href="https://codelabs.developers.google.com/" class="devsite-site-logo-link gc-analytics-event"
+   data-category="Site-Wide Custom Events" data-label="Site logo" track-type="globalNav"
+   track-name="googleCodelabs" track-metadata-position="nav"
+   track-metadata-eventDetail="nav">
+
+  
+    <img src="https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/images/lockup.svg" class="devsite-site-logo" alt="Google Codelabs">
+  
+
+</a>
+
+
+
+</div>
+        <div class="devsite-top-logo-row-middle">
+          <div class="devsite-header-upper-tabs">
+            
+           </div>
+          
+<devsite-search
+    aria-expanded="false"
+    aria-haspopup="listbox"
+    enable-signin
+    enable-search
+    enable-suggestions
+      enable-query-completion
+    
+    
+    tenant-name="Google Codelabs"
+    
+    
+    
+    
+    
+    
+    role="combobox">
+  <form class="devsite-search-form" action="https://codelabs.developers.google.com/s/results" method="GET">
+    <div class="devsite-search-container">
+      <div class="devsite-searchbox">
+        <input
+          aria-activedescendant=""
+          aria-autocomplete="list"
+          
+          aria-label="Search"
+          aria-haspopup="false"
+          aria-multiline="false"
+          aria-label="Search box"
+          autocomplete="off"
+          class="devsite-search-field devsite-search-query"
+          name="q"
+          
+          placeholder="Search"
+          role="searchbox"
+          type="text"
+          value=""
+          >
+        <div class="devsite-search-image material-icons" aria-hidden="true"></div>
+      </div>
+      <button type="button"
+              search-open
+              class="devsite-search-button devsite-header-icon-button button-flat material-icons"
+              
+              aria-label="Open search"></button>
+    </div>
+  </form>
+  <button type="button"
+          search-close
+          class="devsite-search-button devsite-header-icon-button button-flat material-icons"
+          
+          aria-label="Close search"></button>
+</devsite-search>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+<devsite-language-selector>
+  <ul role="presentation">
+    
+    
+    <li role="presentation">
+      <a role="menuitem" lang="en"
+        >English</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="id"
+        >Bahasa Indonesia</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="de"
+        >Deutsch</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="es"
+        >Español</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="fr"
+        >Français</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="pt_br"
+        >Português – Brasil</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="ru"
+        >Русский</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="zh_cn"
+        >中文 – 简体</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="ja"
+        >日本語</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="ko"
+        >한국어</a>
+    </li>
+    
+  </ul>
+</devsite-language-selector>
+
+
+        
+
+        
+          
+          
+          <devsite-user 
+                        
+                        
+                          enable-profiles
+                        
+                        
+                          fp-auth
+                        
+                        id="devsite-user">
+            
+              
+              <span class="button devsite-top-button" aria-hidden="true" visually-hidden>Sign in</span>
+            
+        </devsite-user>
+           
+        
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
+  
+</devsite-header>
+      <devsite-book-nav scrollbars hidden>
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="devsite-book-nav-filter
+            hidden">
+  <input type="text"
+         placeholder="Filter"
+         
+         aria-label="Type to filter"
+         role="searchbox">
+  
+  <span class="filter-clear-button hidden"
+        data-title="Clear filter"
+        aria-label="Clear filter"
+        role="button"
+        tabindex="0"></span>
+</div>
+
+<nav class="devsite-book-nav devsite-nav nocontent"
+     aria-label="Side menu">
+  <div class="devsite-mobile-header">
+    <button type="button"
+            id="devsite-close-nav"
+            class="devsite-header-icon-button button-flat material-icons gc-analytics-event"
+            data-category="Site-Wide Custom Events"
+            data-label="Close navigation"
+            aria-label="Close navigation">
+    </button>
+    <div class="devsite-product-name-wrapper">
+
+  <a href="https://codelabs.developers.google.com/" class="devsite-site-logo-link gc-analytics-event"
+   data-category="Site-Wide Custom Events" data-label="Site logo" track-type="globalNav"
+   track-name="googleCodelabs" track-metadata-position="nav"
+   track-metadata-eventDetail="nav">
+
+  
+    <img src="https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/images/lockup.svg" class="devsite-site-logo" alt="Google Codelabs">
+  
+
+</a>
+
+
+</div>
+  </div>
+
+  <div class="devsite-book-nav-wrapper">
+    <div class="devsite-mobile-nav-top">
+      
+        <ul class="devsite-nav-list">
+          
+          
+          
+        </ul>
+      
+    </div>
+    
+  </div>
+</nav>
+        
+      </devsite-book-nav>
+      <section id="gc-wrapper">
+        <main role="main" class="devsite-main-content"
+            
+              
+              has-sidebar
+            >
+          
+          <div class="devsite-sidebar">
+            <div class="devsite-sidebar-content">
+              
+              <devsite-toc class="devsite-nav"
+                           role="navigation"
+                           aria-label="On this page"
+                           depth="1"
+                           scrollbars
+                ></devsite-toc>
+              <devsite-recommendations-sidebar class="nocontent devsite-nav">
+              </devsite-recommendations-sidebar>
+            </div>
+          </div>
+          <devsite-content>
+            
+              
+
+
+
+
+
+
+
+
+
+
+
+<article class="devsite-article"><style>
+      body {
+        transition: opacity ease-in 0.2s;
+      }
+
+      body[unresolved] {
+        opacity: 0;
+        display: block;
+        overflow: hidden;
+        position: relative;
+      }
+      </style>
+  
+  
+  
+
+  <div class="devsite-article-meta nocontent" role="navigation">
+    
+    
+    <ul class="devsite-breadcrumb-list"
+  >
+  
+</ul>
+    
+  </div>
+  <h1 class="devsite-page-title">Securely Deploying to Cloud Run</h1>
+  <devsite-toc class="devsite-nav"
+               depth="1"
+               devsite-toc-embedded
+               >
+  </devsite-toc>
+
+  
+
+  
+
+
+
+
+
+
+<div class="devsite-article-body clearfix
+  ">
+
+  
+    
+    <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+    <google-codelab codelab-gaid=""
+                    doc-id="1JfX1QpVL3aTeLHH3PCONbFbRIf-M25g8unDpd-jrTe0"
+                    id="secure-cloud-run-deployment"
+                    title="Securely Deploying to Cloud Run"
+                    no-tooltip=""
+                    environment="web"
+                    category=""
+                    feedback-link=""
+                    layout="paginated"
+                    >
+      
+        <google-codelab-step label="Overview" duration="0" step="0">
+          
+            <google-codelab-about codelab-title="Securely Deploying to Cloud Run"
+                                  authors="Charlie Engelke"
+                                  last-updated="2023-01-24T19:29:39Z"
+                                  >
+            </google-codelab-about>
+          
+          <h2 class="step-title" id="0" data-text="Overview">
+              1. Overview
+          </h2>
+          <p>You will modify the default steps for deploying a service to Cloud Run to improve security, and then see how to access the deployed app in a secure way. The app is a &#34;partner registration service&#34; of the Cymbal Eats application, which is used by companies that work with Cymbal Eats to process food orders.</p>
+<h2 is-upgraded id="what-you-will-learn" data-text="What you will learn">What you will learn</h2>
+<p>By making a few small changes to the minimal default steps for deploying an app to Cloud Run, you can significantly increase its security. You will take an existing app and deployment instructions and change the deployment steps to improve the security of the deployed app.</p>
+<p>You will then see how to authorize access to the app and make authorized requests..</p>
+<p>This is not an exhaustive look at application deployment security, but instead a look at changes you can make to all your future app deployments that will improve their security with very little effort.</p>
+
+
+        </google-codelab-step>
+      
+        <google-codelab-step label="Setup and Requirements" duration="0" step="1">
+          
+          <h2 class="step-title" id="1" data-text="Setup and Requirements">
+              2. Setup and Requirements
+          </h2>
+          <h2 is-upgraded id="self-paced-environment-setup" data-text="Self-paced environment setup">Self-paced environment setup</h2>
+<ol type="1">
+<li>Sign-in to the  <a href="http://console.cloud.google.com/" target="_blank">Google Cloud Console</a> and create a new project or reuse an existing one. If you don&#39;t already have a Gmail or Google Workspace account, you must  <a href="https://accounts.google.com/SignUp" target="_blank">create one</a>.</li>
+</ol>
+<p class="image-container"><img alt="b35bf95b8bf3d5d8.png" style="width: 452.50px" src="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8.png" srcset="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_36.png 36w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_48.png 48w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_72.png 72w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_96.png 96w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_480.png 480w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_720.png 720w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_856.png 856w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_960.png 960w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_1440.png 1440w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_1920.png 1920w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/b35bf95b8bf3d5d8_2880.png 2880w" sizes="(max-width: 840px) 100vw, 856px"></p>
+<p class="image-container"><img alt="a99b7ace416376c4.png" style="width: 401.24px" src="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4.png" srcset="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_36.png 36w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_48.png 48w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_72.png 72w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_96.png 96w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_480.png 480w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_720.png 720w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_856.png 856w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_960.png 960w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_1440.png 1440w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_1920.png 1920w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/a99b7ace416376c4_2880.png 2880w" sizes="(max-width: 840px) 100vw, 856px"></p>
+<p class="image-container"><img alt="bd84a6d3004737c5.png" style="width: 392.00px" src="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5.png" srcset="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_36.png 36w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_48.png 48w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_72.png 72w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_96.png 96w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_480.png 480w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_720.png 720w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_856.png 856w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_960.png 960w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_1440.png 1440w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_1920.png 1920w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/bd84a6d3004737c5_2880.png 2880w" sizes="(max-width: 840px) 100vw, 856px"></p>
+<ul>
+<li>The <strong>Project name</strong> is the display name for this project&#39;s participants. It is a character string not used by Google APIs. You can update it at any time.</li>
+<li>The <strong>Project ID</strong> is unique across all Google Cloud projects and is immutable (cannot be changed after it has been set). The Cloud Console auto-generates a unique string; usually you don&#39;t care what it is. In most codelabs, you&#39;ll need to reference the Project ID (it is typically identified as <code translate="no" dir="ltr">PROJECT_ID</code>). If you don&#39;t like the generated ID, you may generate another random one. Alternatively, you can try your own and see if it&#39;s available. It cannot be changed after this step and will remain for the duration of the project.</li>
+<li>For your information, there is a third value, a <strong>Project Number</strong> which some APIs use. Learn more about all three of these values in the  <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin" target="_blank">documentation</a>.</li>
+</ul>
+<aside class="warning"><p><strong>Caution:</strong> A project ID is globally unique and cannot be used by anyone else after you&#39;ve selected it. You are the only user of that ID. Even if a project is deleted, the ID can never be used again</p>
+</aside>
+<aside class="special"><p><strong>Note:</strong> If you&#39;re using a Gmail account, you can leave the default location set to <strong>No organization</strong>. If you&#39;re using a Google Workspace account, then choose a location that makes sense for your organization.</p>
+</aside>
+<ol type="1" start="2">
+<li>Next, you&#39;ll need to  <a href="https://console.cloud.google.com/billing" target="_blank">enable billing</a> in the Cloud Console to use Cloud resources/APIs. Running through this codelab shouldn&#39;t cost much, if anything at all. To shut down resources so you don&#39;t incur billing beyond this tutorial, you can delete the resources you created or delete the whole project. New users of Google Cloud are eligible for the  <a href="http://cloud.google.com/free" target="_blank">$300 USD Free Trial</a> program.</li>
+</ol>
+<h3 is-upgraded id="activate-cloud-shell" data-text="Activate Cloud Shell">Activate Cloud Shell</h3>
+<ol type="1">
+<li>From the Cloud Console, click <strong>Activate Cloud Shell  </strong><img alt="853e55310c205094.png" style="width: 21.60px" src="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094.png" srcset="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_36.png 36w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_48.png 48w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_72.png 72w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_96.png 96w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_480.png 480w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_720.png 720w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_856.png 856w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_960.png 960w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_1440.png 1440w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_1920.png 1920w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/853e55310c205094_2880.png 2880w" sizes="(max-width: 840px) 100vw, 856px">.</li>
+</ol>
+<p class="image-container"><img alt="55efc1aaa7a4d3ad.png" style="width: 276.00px" src="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad.png" srcset="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_36.png 36w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_48.png 48w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_72.png 72w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_96.png 96w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_480.png 480w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_720.png 720w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_856.png 856w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_960.png 960w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_1440.png 1440w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_1920.png 1920w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/55efc1aaa7a4d3ad_2880.png 2880w" sizes="(max-width: 840px) 100vw, 856px"></p>
+<p>If you&#39;ve never started Cloud Shell before, you&#39;re presented with an intermediate screen (below the fold) describing what it is. If that&#39;s the case, click <strong>Continue</strong> (and you won&#39;t ever see it again). Here&#39;s what that one-time screen looks like:</p>
+<p class="image-container"><img alt="9c92662c6a846a5c.png" style="width: 583.00px" src="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c.png" srcset="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_36.png 36w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_48.png 48w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_72.png 72w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_96.png 96w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_480.png 480w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_720.png 720w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_856.png 856w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_960.png 960w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_1440.png 1440w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_1920.png 1920w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9c92662c6a846a5c_2880.png 2880w" sizes="(max-width: 840px) 100vw, 856px"></p>
+<p>It should only take a few moments to provision and connect to Cloud Shell.</p>
+<p class="image-container"><img alt="9f0e51b578fecce5.png" style="width: 701.23px" src="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5.png" srcset="https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_36.png 36w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_48.png 48w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_72.png 72w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_96.png 96w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_480.png 480w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_720.png 720w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_856.png 856w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_960.png 960w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_1440.png 1440w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_1920.png 1920w,https://codelabs.developers.google.com/static/secure-cloud-run-deployment/img/9f0e51b578fecce5_2880.png 2880w" sizes="(max-width: 840px) 100vw, 856px"></p>
+<p>This virtual machine is loaded with all the development tools you need. It offers a persistent 5GB home directory and runs in Google Cloud, greatly enhancing network performance and authentication.  Much, if not all, of your work in this codelab can be done with simply a browser or your Chromebook.</p>
+<p>Once connected to Cloud Shell, you should see that you are already authenticated and that the project is already set to your project ID.</p>
+<ol type="1" start="2">
+<li>Run the following command in Cloud Shell to confirm that you are authenticated:</li>
+</ol>
+<pre translate="no" dir="ltr">gcloud auth list
+</pre>
+<p><strong>Command output</strong></p>
+<pre translate="no" dir="ltr"> Credentialed Accounts
+ACTIVE  ACCOUNT
+*       &lt;my_account&gt;@&lt;my_domain.com&gt;
+
+To set the active account, run:
+    $ gcloud config set account `ACCOUNT`
+</pre>
+<aside class="special"><p><strong>Note:</strong> The <code translate="no" dir="ltr">gcloud</code> command-line tool is the powerful and unified command-line tool in Google Cloud. It comes preinstalled in Cloud Shell. You will notice its support for tab completion. For more information, see  <a href="https://cloud.google.com/sdk/gcloud/" target="_blank">gcloud command-line tool overview</a>.</p>
+</aside>
+<ol type="1" start="3">
+<li>Run the following command in Cloud Shell to confirm that the gcloud command knows about your project:</li>
+</ol>
+<pre translate="no" dir="ltr">gcloud config list project
+</pre>
+<p><strong>Command output</strong></p>
+<pre translate="no" dir="ltr">[core]
+project = &lt;PROJECT_ID&gt;
+</pre>
+<p>If it is not, you can set it with this command:</p>
+<pre translate="no" dir="ltr">gcloud config set project &lt;PROJECT_ID&gt;
+</pre>
+<p><strong>Command output</strong></p>
+<pre translate="no" dir="ltr">Updated property [core/project].
+</pre>
+<h2 is-upgraded id="environment-setup" data-text="Environment Setup">Environment Setup</h2>
+<p>You will be running commands in the Cloud Shell command line for this lab. You can usually copy the commands and paste them as is, though in some cases you will need to change placeholder values to correct ones.</p>
+<ol type="1">
+<li>Set an environment variable to the Project ID for use in later commands:</li>
+</ol>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">export PROJECT_ID=$(gcloud config get-value project)
+export REGION=us-central1
+export SERVICE_NAME=partner-registration-service
+</code></pre>
+<ol type="1" start="2">
+<li>Enable the Cloud Run service API that will run your app, the Firestore API that will provide NoSQL data storage, the Cloud Build API that will be used by the deployment command, and the Artifact Registry that will be used to hold the application container when built:</li>
+</ol>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">gcloud services enable \
+  run.googleapis.com \
+  firestore.googleapis.com \
+  cloudbuild.googleapis.com \
+  artifactregistry.googleapis.com
+</code></pre>
+<ol type="1" start="3">
+<li>Initialize the Firestore database in Native mode. That command uses the App Engine API, so it must be enabled first.</li>
+</ol>
+<p>The command must specify a region for App Engine, which we will not be using but must create for historical reasons, and a region for the database. We will use us-central for App Engine, and <strong>nam5</strong> for the database. <strong>nam5</strong> is the United State multi-region location. Multi-region locations maximize the availability and durability of the database.</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">gcloud services enable appengine.googleapis.com
+
+gcloud app create --region=us-central
+gcloud firestore databases create --region=nam5
+</code></pre>
+<ol type="1" start="4">
+<li>Clone the sample app repository and navigate to the directory</li>
+</ol>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">git clone https://github.com/GoogleCloudPlatform/cymbal-eats.git
+
+cd cymbal-eats/partner-registration-service
+</code></pre>
+
+
+        </google-codelab-step>
+      
+        <google-codelab-step label="Review the README" duration="0" step="2">
+          
+          <h2 class="step-title" id="2" data-text="Review the README">
+              3. Review the README
+          </h2>
+          <p>Open the editor and look at the files comprising the app. View <strong>README.md</strong>, which describes the steps needed to deploy this app. Some of these steps may involve implicit or explicit security decisions to consider. You will be changing a few of these choices to improve the security of your deployed app, as described here:</p>
+<h2 is-upgraded id="step-3---run-npm-install" data-text="Step 3 - Run npm install">Step 3 - Run <code translate="no" dir="ltr">npm install</code></h2>
+<p>It&#39;s important to know the provenance and integrity of any third party software used in an app. Managing Software Supply Chain Security is relevant to building any software, not just apps deployed to Cloud Run. This lab focused on deployment, so does not address this area, but you might want to research the topic separately..</p>
+<h2 is-upgraded id="steps-4-and-5---edit-and-run-deploy.sh" data-text="Steps 4 and 5 - Edit and run deploy.sh">Steps 4 and 5 - Edit and run <code translate="no" dir="ltr">deploy.sh</code></h2>
+<p>These steps deploy the app to Cloud Run leaving most options at their defaults. You will modify this step to make the deployment more secure in two key ways:</p>
+<ol type="1">
+<li>Do <strong>not</strong> allow unauthenticated access. It can be convenient to allow that for trying things out during exploration, but this is a web service for use by commercial partners, and should always authenticate its users.</li>
+<li>Specify that the application must use a dedicated service account tailored with only the necessary privileges, instead of a default one that will likely have more API and resource access than needed. This is known as the <strong>principle of least privilege</strong>, and is a fundamental concept of application security.</li>
+</ol>
+<h2 is-upgraded id="steps-6-through-11---make-sample-web-requests-to-verify-correct-behavior" data-text="Steps 6 through 11 - Make sample web requests to verify correct behavior">Steps 6 through 11 - Make sample web requests to verify correct behavior</h2>
+<p>Since the application deployment now requires authentication, these requests must now include proof of the requester&#39;s identity. Instead of altering these files, you will make requests directly from the command line.</p>
+
+
+        </google-codelab-step>
+      
+        <google-codelab-step label="Securely deploy the service" duration="0" step="3">
+          
+          <h2 class="step-title" id="3" data-text="Securely deploy the service">
+              4. Securely deploy the service
+          </h2>
+          <p>There were two changes identified as needed in the <code translate="no" dir="ltr">deploy.sh</code> script: <strong>not</strong> allowing unauthenticated access, and using a dedicated service account with minimal privileges.</p>
+<p>You will create a new service account first, then edit the <code translate="no" dir="ltr">deploy.sh</code> script to reference that service account and to disallow unauthenticated access, then deploy the service by running the modified script before we can run the modified deploy.sh script..</p>
+<h2 is-upgraded id="create-a-service-account-and-give-it-needed-access-to-firestoredatastore" data-text="Create a service account and give it needed access to Firestore/Datastore">Create a service account and give it needed access to Firestore/Datastore</h2>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">gcloud iam service-accounts create partner-sa
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member=&#34;serviceAccount:partner-sa@${PROJECT_ID}.iam.gserviceaccount.com&#34; \
+  --role=roles/datastore.user
+</code></pre>
+<h2 is-upgraded id="edit-deploy.sh" data-text="Edit deploy.sh">Edit <code translate="no" dir="ltr">deploy.sh</code></h2>
+<p>Modify the <code translate="no" dir="ltr">deploy.sh</code> file to <strong>disallow</strong> unauthenticated access(–no-allow-unauthenticated), and to specify the new service account(–service-account) for the deployed app. Correct the GOOGLE_PROJECT_ID to be your own project&#39;s ID.</p>
+<p>You will be deleting the first two lines, and changing three other lines as shown below.</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">gcloud run deploy $SERVICE_NAME \
+  --source . \
+  --platform managed \
+  --region ${REGION} \
+  --no-allow-unauthenticated \
+  --project=$PROJECT_ID \
+  --service-account=partner-sa@${PROJECT_ID}.iam.gserviceaccount.com
+</code></pre>
+<h2 is-upgraded id="deploy-the-service" data-text="Deploy the service">Deploy the service</h2>
+<p>From the command line, run the <code translate="no" dir="ltr">deploy.sh</code> script:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">./deploy.sh
+</code></pre>
+<p>When deployment is complete, the last line of the command output will display the new app&#39;s Service URL. Save the URL in an environment variable:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">export SERVICE_URL=&lt;URL from last line of command output&gt;
+</code></pre>
+<p>Now try to fetch an order from the app using the <code translate="no" dir="ltr">curl</code> tool:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">curl -i -X GET $SERVICE_URL/partners
+</code></pre>
+<p>The <code translate="no" dir="ltr">-i</code> flag for the <code translate="no" dir="ltr">curl</code> command tells it to include response headers in the output. The first line of the output should be:</p>
+<p><code translate="no" dir="ltr">HTTP/2 403</code></p>
+<p>The app was deployed with the option to <strong>disallow</strong> unauthenticated requests. This curl command contains no authentication information, so it is refused by Cloud Run. The actual deployed application does not even run or receive any data from this request.</p>
+
+
+        </google-codelab-step>
+      
+        <google-codelab-step label="Make Authenticated Requests" duration="0" step="4">
+          
+          <h2 class="step-title" id="4" data-text="Make Authenticated Requests">
+              5. Make Authenticated Requests
+          </h2>
+          <p>The deployed app is invoked by making web requests, which now must be authenticated for Cloud Run to allow them. Web requests are authenticated by including an <code translate="no" dir="ltr">Authorization</code> header of the form:</p>
+<p><code translate="no" dir="ltr">Authorization: Bearer</code> <strong><em><code translate="no" dir="ltr">identity-token</code></em></strong></p>
+<p>The identity-token is a short term, cryptographically signed, encoded string issued by a trusted authentication provider. In this case, an unexpired, valid, Google-issued identity token is required.</p>
+<h2 is-upgraded id="make-a-request-as-your-user-account" data-text="Make a request as your user account">Make a request as your user account</h2>
+<p>The Google Cloud CLI tool can provide a token for the default authenticated user. Run this command to get an identity token for your own account and save it in the ID_TOKEN environment variable:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">export ID_TOKEN=$(gcloud auth print-identity-token)
+</code></pre>
+<p>By default, Google issued identity tokens are valid for one hour. Run the following curl command to make the request that was rejected before because it was not authorized. This command will include the necessary header:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">curl -i -X GET $SERVICE_URL/partners \
+  -H &#34;Authorization: Bearer $ID_TOKEN&#34;
+</code></pre>
+<p>The command output should start with <code translate="no" dir="ltr">HTTP/2 200</code>, indicating that the request is acceptable and is being honored. (If you wait an hour and try this request again, it will fail because the token will have expired.) The body of the response is at the end of the output, after a blank line:</p>
+<pre translate="no" dir="ltr">{&#34;status&#34;:&#34;success&#34;,&#34;data&#34;:[]}
+</pre>
+<p>There are no partners yet.</p>
+<p>Register partners using the sample JSON data in the directory with two <code translate="no" dir="ltr">curl</code> commands:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">curl -X POST \
+  -H &#34;Authorization: Bearer $ID_TOKEN&#34; \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#34;@example-partner.json&#34; \
+  $SERVICE_URL/partner
+</code></pre>
+<p>and</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">curl -X POST \
+  -H &#34;Authorization: Bearer $ID_TOKEN&#34; \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#34;@example-partner2.json&#34; \
+  $SERVICE_URL/partner
+</code></pre>
+<p>Repeat the earlier GET request to see all the registered partners now:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">curl -i -X GET $SERVICE_URL/partners \
+  -H &#34;Authorization: Bearer $ID_TOKEN&#34;
+</code></pre>
+<p>You should see JSON data with far more content, giving information about the two registered partners.</p>
+<h2 is-upgraded id="make-a-request-as-an-unauthorized-account" data-text="Make a request as an unauthorized account">Make a request as an unauthorized account</h2>
+<p>The authenticated request made in the last step succeeded not only because it was authenticated, but also because the authenticated user (your account) was authorized. That is, the account had permission to invoke the app. Not all authenticated accounts will be authorized to do that.</p>
+<p>The default account used in the previous request was authorized because it is the account that created the project containing the app, and by default that gave it permission to invoke any Cloud Run applications in the account. That permission can be revoked if needed, which would be desirable in a production application. Rather than doing that now, you will create a new service account with no privileges or roles assigned to it and use that to try to access the deployed app.</p>
+<ol type="1">
+<li>Create a service account called <code translate="no" dir="ltr">tester</code>.</li>
+</ol>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">gcloud iam service-accounts create tester
+</code></pre>
+<ol type="1" start="2">
+<li>You will get an identity token for this new account in much the same way you got one for your default account earlier. However, this requires your default account to have permission to impersonate service accounts. Grant your account this permission.</li>
+</ol>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">export USER_EMAIL=$(gcloud config list account --format &#34;value(core.account)&#34;)
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member=&#34;user:$USER_EMAIL&#34; \
+  --role=roles/iam.serviceAccountTokenCreator
+</code></pre>
+<ol type="1" start="3">
+<li>Now run the following command to save an identity token for this new account in the TEST_IDENTITY environment variable. <strong>If the command shows an error message, wait a minute or two and try again.</strong></li>
+</ol>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">export TEST_TOKEN=$( \
+  gcloud auth print-identity-token \
+    --impersonate-service-account \
+    &#34;tester@$PROJECT_ID.iam.gserviceaccount.com&#34; \
+)
+</code></pre>
+<ol type="1" start="4">
+<li>Make the authenticated web request as before, but using this identity token:</li>
+</ol>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">curl -i -X GET $SERVICE_URL/partners \
+  -H &#34;Authorization: Bearer $TEST_TOKEN&#34;
+</code></pre>
+<p>The command output will again begin with <code translate="no" dir="ltr">HTTP/2 403</code> because the request, though <em>authenticated</em>, is not <em>authorized</em>. The new service account does not have permission to invoke this app.</p>
+<h2 is-upgraded id="authorizing-an-account" data-text="Authorizing an account">Authorizing an account</h2>
+<p>A user or service account must have the Cloud Run Invoker role on a Cloud Run service in order to make requests to it. Give the tester service account that role with the command:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">export REGION=us-central1
+gcloud run services add-iam-policy-binding ${SERVICE_NAME} \
+  --member=&#34;serviceAccount:tester@$PROJECT_ID.iam.gserviceaccount.com&#34; \
+  --role=roles/run.invoker \
+  --region=${REGION}
+</code></pre>
+<p>After waiting a minute or two for the new role to be updated, repeat the authenticated request. Save a new TEST_TOKEN if it has been an hour or more since it was first saved.</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">curl -i -X GET $SERVICE_URL/partners \
+  -H &#34;Authorization: Bearer $TEST_TOKEN&#34;
+</code></pre>
+<p>The command output now begins with <code translate="no" dir="ltr">HTTP/1.1 200 OK</code> and the last line contains the JSON response. This request was accepted by Cloud Run and processed by the app.</p>
+
+
+        </google-codelab-step>
+      
+        <google-codelab-step label="Authenticating programs versus authenticating users" duration="0" step="5">
+          
+          <h2 class="step-title" id="5" data-text="Authenticating programs versus authenticating users">
+              6. Authenticating programs versus authenticating users
+          </h2>
+          <p>The authenticated requests you have made up to now have used the <code translate="no" dir="ltr">curl</code> command line tool. There are other tools and programming languages that could have been used instead. However, authenticated Cloud Run requests <strong>cannot</strong> be made using a web browser with plain web pages. If a user clicks on a link or clicks a button to submit a form in a web page, the browser will not add the <code translate="no" dir="ltr">Authorization</code> header required by Cloud Run for authenticated requests.</p>
+<p><strong>Cloud Run&#39;s built-in authentication mechanism is intended for use by programs, not by end users.</strong></p>
+<p><strong><em>Note:</em></strong> </p>
+<p><em>Cloud Run can host user-facing web applications, but those kinds of applications must set Cloud Run to allow unauthenticated requests from users&#39; web browsers. If the applications require user authentication the application must handle it instead of asking Cloud Run to do it. The application can do that in the same ways web applications outside of Cloud Run do. How that is done is outside the scope of this codelab.</em></p>
+<p>You may have noticed that the responses to the example requests up until now have been JSON objects, not web pages. That&#39;s because this partner registration service is intended for programs to use, and JSON is a convenient form for them to consume. Next, you will write and run a program to consume and use this data.</p>
+<h2 is-upgraded id="authenticated-requests-from-a-python-program" data-text="Authenticated requests from a Python program">Authenticated requests from a Python program</h2>
+<p>A program can make authenticated requests of a secured Cloud Run application via standard HTTP web requests, but including an <code translate="no" dir="ltr">Authorization</code> header. The only new challenge for those programs is getting a valid, unexpired identity token to place in that header. That token will be validated by Cloud Run using Google Cloud Identity and Access Management (IAM), so the token must be issued and signed by an authority recognized by IAM. There are client libraries available in many languages programs can use to request such a token be issued. The client library this example will use is the Python <code translate="no" dir="ltr">google.auth</code> one. There are several Python libraries for making web requests in general; this example uses the popular <code translate="no" dir="ltr">requests</code> module.</p>
+<p>The first step is to install the two client libraries:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">pip install google-auth
+pip install requests
+</code></pre>
+<p>Python code to request an identity token for the <strong><em>default user</em></strong> is:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">credentials, _ = google.auth.default()
+credentials.refresh(google.auth.transport.requests.Request())
+identity_token = credentials.id_token
+</code></pre>
+<p>If you are using a command shell such as Cloud Shell or the standard terminal shell on your own computer, the default user is whichever one has authenticated inside that shell. In Cloud Shell that&#39;s generally the user logged into Google. In other cases, it is whatever user authenticated with <code translate="no" dir="ltr">gcloud auth login</code> or other <code translate="no" dir="ltr">gcloud</code> command. If the user has never logged in, there will be no default user and this code will fail.</p>
+<p>For a program making requests of another program, you generally don&#39;t want to use a person&#39;s identity, but rather the requesting program&#39;s identity. That&#39;s what service accounts are for. You deployed the Cloud Run service with a dedicated service account that provides the identity it uses when making API requests, such as to Cloud Firestore. When a program runs on a Google Cloud platform the client libraries will automatically use the service account assigned to it as its default identity, so the same program code works in both situations.</p>
+<p>Python code to make a request with an added Authorization header is:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">auth_header = {&#34;Authorization&#34;: &#34;Bearer &#34; + identity_token}
+response = requests.get(url, headers=auth_header)
+</code></pre>
+<p>The following complete Python program will make an authenticated request to the Cloud Run service to retrieve all registered partners and then print their names and assigned IDs. Copy and run the command below to save this code to the file <code translate="no" dir="ltr">print_partners.py</code>.</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">cat &gt; ./print_partners.py &lt;&lt; EOF
+def print_partners():
+    import google.auth
+    import google.auth.transport.requests
+    import requests
+
+    credentials, _ = google.auth.default()
+    credentials.refresh(google.auth.transport.requests.Request())
+    identity_token = credentials.id_token
+
+    auth_header = {&#34;Authorization&#34;: &#34;Bearer &#34; + identity_token}
+    response = requests.get(&#34;${SERVICE_URL}/partners&#34;, headers=auth_header)
+
+    parsed_response = response.json()
+    partners = parsed_response[&#34;data&#34;]
+
+    for partner in partners:
+        print(f&#34;{partner[&#39;partnerId&#39;]}: {partner[&#39;name&#39;]}&#34;)
+
+
+print_partners()
+EOF
+</code></pre>
+<p>You will run this program with a shell command. You will need to authenticate as the default user first, so that the program will be able to use those credentials. Run the gcloud auth command below:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">gcloud auth application-default login
+</code></pre>
+<p>Follow the instructions to complete the login. Then run the program from the command line:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">python print_partners.py
+</code></pre>
+<p>The output will look something like the following:</p>
+<pre class="prettyprint" translate="no" dir="ltr"><code translate="no" dir="ltr">10102: Zippy food delivery
+67292: Foodful
+</code></pre>
+<p>The program&#39;s request reached the Cloud Run service because it was authenticated with your identity, and you are the owner of this project and therefore authorized to run it by default. It would be more common for this program to run under a service account&#39;s identity. When run on most Google Cloud products, such as Cloud Run or App Engine, the default identity would be a service account and will be used instead of a personal account.</p>
+
+
+        </google-codelab-step>
+      
+        <google-codelab-step label="Congratulations!" duration="0" step="6">
+          
+          <h2 class="step-title" id="6" data-text="Congratulations!">
+              7. Congratulations!
+          </h2>
+          <p>Congratulations, you finished the codelab!</p>
+<h2 is-upgraded id="whats-next:" data-text="What's next:">What's next:</h2>
+<p>Explore other Cymbal Eats codelabs:</p>
+<ul>
+<li><a href="https://codelabs.developers.google.com/eventarc-workflows-cloud-run" target="_blank">Triggering Cloud Workflows with Eventarc</a></li>
+<li><a href="https://codelabs.developers.google.com/triggering-cloud-functions-from-cloud-storage" target="_blank">Triggering Event Processing from Cloud Storage </a></li>
+<li><a href="https://codelabs.developers.google.com/connecting-to-private-cloudsql-from-cloud-run" target="_blank">Connecting to Private CloudSQL from Cloud Run</a></li>
+<li><a href="https://codelabs.developers.google.com/connecting-to-serverless-databases-from-cloud-run" target="_blank">Connecting to Fully Managed Databases from Cloud Run</a></li>
+<li><a href="https://codelabs.developers.google.com/secure-serverless-application-with-identity-aware-proxy" target="_blank">Secure Serverless Application with Identity Aware Proxy (IAP)</a></li>
+<li><a href="https://codelabs.developers.google.com/cloud-run-jobs-and-cloud-scheduler" target="_blank">Triggering Cloud Run Jobs with Cloud Scheduler</a></li>
+<li><a href="https://codelabs.developers.google.com/cloud-run-ingress-deployment" target="_blank">Securing Cloud Run Ingress Traffic</a></li>
+<li><a href="https://codelabs.developers.google.com/connecting-to-private-alloydb-from-gke-autopilot" target="_blank">Connecting to private AlloyDB from GKE Autopilot</a></li>
+</ul>
+<h2 is-upgraded id="clean-up" data-text="Clean up">Clean up</h2>
+<p>To avoid incurring charges to your Google Cloud account for the resources used in this tutorial, either delete the project that contains the resources, or keep the project and delete the individual resources.</p>
+<h2 is-upgraded id="deleting-the-project" data-text="Deleting the project">Deleting the project</h2>
+<p>The easiest way to eliminate billing is to delete the project that you created for the tutorial.</p>
+
+
+        </google-codelab-step>
+      
+    </google-codelab>
+  
+  
+
+  
+</div>
+
+  
+
+  
+    
+    
+    
+  
+
+  
+  
+</article>
+
+
+<devsite-content-footer class="nocontent">
+  <p>Except as otherwise noted, the content of this page is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 License</a>, and code samples are licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>. For details, see the <a href="https://developers.google.com/site-policies">Google Developers Site Policies</a>. Java is a registered trademark of Oracle and/or its affiliates.</p>
+  
+</devsite-content-footer>
+
+
+<devsite-notification
+>
+</devsite-notification>
+
+
+  
+<div class="devsite-content-data">
+  <template class="devsite-thumb-rating-down-categories">
+  [{
+      "type": "thumb-down",
+      "id": "missingTheInformationINeed",
+      "label":"Missing the information I need"
+    },{
+      "type": "thumb-down",
+      "id": "tooComplicatedTooManySteps",
+      "label":"Too complicated / too many steps"
+    },{
+      "type": "thumb-down",
+      "id": "outOfDate",
+      "label":"Out of date"
+    },{
+      "type": "thumb-down",
+      "id": "samplesCodeIssue",
+      "label":"Samples / code issue"
+    },{
+      "type": "thumb-down",
+      "id": "otherDown",
+      "label":"Other"
+    }]
+  </template>
+  <template class="devsite-thumb-rating-up-categories">
+  [{
+      "type": "thumb-up",
+      "id": "easyToUnderstand",
+      "label":"Easy to understand"
+    },{
+      "type": "thumb-up",
+      "id": "solvedMyProblem",
+      "label":"Solved my problem"
+    },{
+      "type": "thumb-up",
+      "id": "otherUp",
+      "label":"Other"
+    }]
+  </template>
+  
+</div>
+            
+          </devsite-content>
+        </main>
+        <devsite-footer-promos class="devsite-footer">
+          
+            
+          
+        </devsite-footer-promos>
+        <devsite-footer-linkboxes class="devsite-footer">
+          
+            
+<nav class="devsite-footer-linkboxes nocontent" aria-label="Footer links">
+  
+  <ul class="devsite-footer-linkboxes-list">
+    
+    <li class="devsite-footer-linkbox ">
+    <h3 class="devsite-footer-linkbox-heading no-link">Connect</h3>
+      <ul class="devsite-footer-linkbox-list">
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://googledevelopers.blogspot.com/"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 1)"
+            >
+            
+          
+            Blog
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://www.facebook.com/Google-Developers-967415219957038"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 2)"
+            >
+            
+          
+            Facebook
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://medium.com/google-developers"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 3)"
+            >
+            
+          
+            Medium
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://twitter.com/googledevs"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 4)"
+            >
+            
+          
+            Twitter
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://www.youtube.com/user/GoogleDevelopers"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 5)"
+            >
+            
+              
+              
+            
+          
+            YouTube
+          
+          </a>
+          
+          
+        </li>
+        
+      </ul>
+    </li>
+    
+    <li class="devsite-footer-linkbox ">
+    <h3 class="devsite-footer-linkbox-heading no-link">Programs</h3>
+      <ul class="devsite-footer-linkbox-list">
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://www.womentechmakers.com/"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 1)"
+            >
+            
+          
+            Women Techmakers
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://developers.google.com/community/gdg"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 2)"
+            >
+            
+          
+            Google Developer Groups
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://developers.google.com/community/experts"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 3)"
+            >
+            
+          
+            Google Developers Experts
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://developers.google.com/community/accelerators"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 4)"
+            >
+            
+          
+            Accelerators
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://developers.google.com/community/gdsc"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 5)"
+            >
+            
+              
+              
+            
+          
+            Google Developer Student Clubs
+          
+          </a>
+          
+          
+        </li>
+        
+      </ul>
+    </li>
+    
+    <li class="devsite-footer-linkbox ">
+    <h3 class="devsite-footer-linkbox-heading no-link">Developer consoles</h3>
+      <ul class="devsite-footer-linkbox-list">
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://console.developers.google.com/"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 1)"
+            >
+            
+          
+            Google API Console
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://console.cloud.google.com/"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 2)"
+            >
+            
+          
+            Google Cloud Platform Console
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://play.google.com/apps/publish"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 3)"
+            >
+            
+          
+            Google Play Console
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://console.firebase.google.com/"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 4)"
+            >
+            
+          
+            Firebase Console
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://console.actions.google.com/"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 5)"
+            >
+            
+          
+            Actions on Google Console
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://cast.google.com/publish"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 6)"
+            >
+            
+          
+            Cast SDK Developer Console
+          
+          </a>
+          
+          
+        </li>
+        
+        <li class="devsite-footer-linkbox-item">
+          
+          <a href="http://chrome.google.com/webstore/developer/dashboard"
+             class="devsite-footer-linkbox-link gc-analytics-event"
+             data-category="Site-Wide Custom Events"
+            
+             data-label="Footer Link (index 7)"
+            >
+            
+              
+              
+            
+          
+            Chrome Web Store Dashboard
+          
+          </a>
+          
+          
+        </li>
+        
+      </ul>
+    </li>
+    
+  </ul>
+  
+</nav>
+          
+        </devsite-footer-linkboxes>
+        <devsite-footer-utility class="devsite-footer">
+          
+            
+
+<div class="devsite-footer-utility nocontent">
+  
+  
+  <nav class="devsite-footer-sites" aria-label="Other Google Developers websites">
+    <a href="../developers.google.com/index.html"
+       class="devsite-footer-sites-logo-link gc-analytics-event"
+       data-category="Site-Wide Custom Events"
+       data-label="Footer Google Developers Link">
+      <picture>
+        <source srcset="https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/images/lockup-developers-dark-theme.svg"
+                media="(prefers-color-scheme: none)"
+                class="devsite-dark-theme"
+                loading="lazy"
+                alt="Google Developers">
+        <img class="devsite-footer-sites-logo"
+             src="https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/images/lockup-developers.svg"
+             loading="lazy"
+             alt="Google Developers">
+      </picture>
+    </a>
+    <ul class="devsite-footer-sites-list">
+      
+      <li class="devsite-footer-sites-item">
+        <a href="http://developer.android.com/"
+           class="devsite-footer-sites-link
+                  gc-analytics-event"
+           data-category="Site-Wide Custom Events"
+         
+           data-label="Footer Android Link"
+         
+         >
+          Android
+        </a>
+      </li>
+      
+      <li class="devsite-footer-sites-item">
+        <a href="http://developer.chrome.com/home"
+           class="devsite-footer-sites-link
+                  gc-analytics-event"
+           data-category="Site-Wide Custom Events"
+         
+           data-label="Footer Chrome Link"
+         
+         >
+          Chrome
+        </a>
+      </li>
+      
+      <li class="devsite-footer-sites-item">
+        <a href="http://firebase.google.com/"
+           class="devsite-footer-sites-link
+                  gc-analytics-event"
+           data-category="Site-Wide Custom Events"
+         
+           data-label="Footer Firebase Link"
+         
+         >
+          Firebase
+        </a>
+      </li>
+      
+      <li class="devsite-footer-sites-item">
+        <a href="http://cloud.google.com/"
+           class="devsite-footer-sites-link
+                  gc-analytics-event"
+           data-category="Site-Wide Custom Events"
+         
+           data-label="Footer Google Cloud Platform Link"
+         
+         >
+          Google Cloud Platform
+        </a>
+      </li>
+      
+      <li class="devsite-footer-sites-item">
+        <a href="http://developers.google.com/products"
+           class="devsite-footer-sites-link
+                  gc-analytics-event"
+           data-category="Site-Wide Custom Events"
+         
+           data-label="Footer All products Link"
+         
+         >
+          All products
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  
+
+  
+  <nav class="devsite-footer-utility-links" aria-label="Utility links">
+    
+    <ul class="devsite-footer-utility-list">
+      
+      <li class="devsite-footer-utility-item
+                 ">
+        
+        
+        <a class="devsite-footer-utility-link gc-analytics-event"
+           href="http://developers.google.com/terms/site-terms"
+           data-category="Site-Wide Custom Events"
+           data-label="Footer Terms link"
+         >
+          Terms
+        </a>
+        
+      </li>
+      
+      <li class="devsite-footer-utility-item
+                 ">
+        
+        
+        <a class="devsite-footer-utility-link gc-analytics-event"
+           href="http://policies.google.com/privacy"
+           data-category="Site-Wide Custom Events"
+           data-label="Footer Privacy link"
+         >
+          Privacy
+        </a>
+        
+      </li>
+      
+      <li class="devsite-footer-utility-item
+                 devsite-footer-utility-button">
+        
+        <span class="devsite-footer-utility-description">Sign up for the Google Developers newsletter</span>
+        
+        
+        <a class="devsite-footer-utility-link gc-analytics-event"
+           href="http://services.google.com/fb/forms/googledevelopersnewsletter/?utm_medium=referral&amp;utm_source=google-products&amp;utm_team=googledevs&amp;utm_campaign=201611-newsletter-launch"
+           data-category="Site-Wide Custom Events"
+           data-label="Footer Subscribe link"
+         >
+          Subscribe
+        </a>
+        
+      </li>
+      
+    </ul>
+    
+    
+<devsite-language-selector>
+  <ul role="presentation">
+    
+    
+    <li role="presentation">
+      <a role="menuitem" lang="en"
+        >English</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="id"
+        >Bahasa Indonesia</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="de"
+        >Deutsch</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="es"
+        >Español</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="fr"
+        >Français</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="pt_br"
+        >Português – Brasil</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="ru"
+        >Русский</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="zh_cn"
+        >中文 – 简体</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="ja"
+        >日本語</a>
+    </li>
+    
+    <li role="presentation">
+      <a role="menuitem" lang="ko"
+        >한국어</a>
+    </li>
+    
+  </ul>
+</devsite-language-selector>
+
+  </nav>
+</div>
+          
+        </devsite-footer-utility>
+        <devsite-panel></devsite-panel>
+      </section></section>
+    <devsite-sitemask></devsite-sitemask>
+    <devsite-snackbar
+    
+    >
+</devsite-snackbar>
+    <devsite-tooltip ></devsite-tooltip>
+    <devsite-heading-link></devsite-heading-link>
+    <devsite-analytics analytics-iframe>
+      
+        <script type="application/json" analytics>[]</script>
+<script type="application/json" tag-management gtm>{&#34;ga4&#34;: [], &#34;gtm&#34;: [], &#34;parameters&#34;: {&#34;internalUser&#34;: &#34;False&#34;, &#34;language&#34;: {&#34;machineTranslated&#34;: &#34;False&#34;, &#34;requested&#34;: &#34;en&#34;, &#34;served&#34;: &#34;en&#34;}, &#34;pageType&#34;: &#34;codelab&#34;, &#34;projectName&#34;: null, &#34;signedIn&#34;: &#34;False&#34;, &#34;tenant&#34;: &#34;codelabs&#34;, &#34;recommendations&#34;: {&#34;sourcePage&#34;: &#34;&#34;, &#34;sourceType&#34;: 0, &#34;sourceRank&#34;: 0, &#34;sourceIdenticalDescriptions&#34;: 0, &#34;sourceTitleWords&#34;: 0, &#34;sourceDescriptionWords&#34;: 0, &#34;experiment&#34;: &#34;&#34;}, &#34;experiment&#34;: {&#34;ids&#34;: &#34;&#34;}}, &#34;tags&#34;: []}</script>
+      
+    </devsite-analytics>
+    
+      <devsite-badger></devsite-badger>
+    
+    
+    <script nonce="2fi1IuPs0YbYPz8yzYnG/7jdIEn7jF">
+  
+  (function(d,e,v,s,i,t,E){d['GoogleDevelopersObject']=i;
+    t=e.createElement(v);t.async=1;t.src=s;E=e.getElementsByTagName(v)[0];
+    E.parentNode.insertBefore(t,E);})(window, document, 'script',
+    'https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/js/app_loader.js', '[17,"en",null,"https://codelabs.developers.google.com/js/devsite_app_module.js","https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf","https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs","https://codelabs-dot-devsite-v2-prod.appspot.com/",1,null,["/_pwa/codelabs/manifest.json","https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/images/video-placeholder.svg","https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/images/favicon.png","https://www.gstatic.com/devrel-devsite/prod/v67cb8b0ddf4e3bae39406c7b2c88affae9b405bee7499568a4013f440189dfbf/codelabs/images/lockup.svg","https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700&display=swap"],1,null,[1,6,8,12,14,17,21,25,40,50,52,63,70,75,76,80,87,91,92,93,97,98,100,101,102,103,104,105,107,108,109,110,111,112,113,115,116,117,118,120,122,124,125,126,127,129,130,131,132,133,134,135,136,138,140,141,144,147,148,149,150,151,152,154,155,156,157,158,159,161,163,164,165,168,169,170,172,173,179,180,182,183,186,190,191,193,196],"AIzaSyAP-jjEJBzmIyKR4F-3XITp8yM9T1gEEI8","AIzaSyB6xiKGDR5O3Ak2okS4rLkauxGUG7XP0hg","codelabs.developers.google.com","AIzaSyAQk0fBONSGUqCNznf6Krs82Ap1-NV6J4o","AIzaSyCCxcqdrZ_7QMeLCRY20bh_SXdAYqy70KY",null,null,null,["BookNav__enable_book_nav_filtering","Profiles__enable_profile_communities","MiscFeatureFlags__emergency_css","Cloud__enable_cloud_shell_fte_user_flow","Significatio__enable_experiment_id_caching","Search__enable_faceted_search","Profiles__enable_developer_profiles_interests","Cloud__enable_cloudx_ping","Cloud__enable_cloud_facet_chat","Profiles__enable_profile_notifications_ui","Cloud__enable_cloudx_experiment_ids","MiscFeatureFlags__enable_tls_version_for_gaia_calls","MiscFeatureFlags__enable_footprints_record_views","Cloud__enable_cloud_dlp_service","Profiles__enable_profile_collections","Search__enable_suggestions_from_borg","Badges__enable_hide_badges","Profiles__enable_developer_profiles_callout","Profiles__enable_developer_profiles_dashboard_recommendations","Experiments__enable_experiments","Profiles__enable_public_developer_profiles","SignIn__enable_auto_signin_oauth","Experiments__reqs_query_experiments","Profiles__require_profile_eligibility_for_signin","BookNav__enable_collapsible_book_nav","Cloud__enable_cloud_shell","Localization__enable_locale_redirects","Search__enable_devsite_serp","Profiles__enable_page_saving","Search__enable_page_map","Badges__enable_drag_and_drop_badges","Search__enable_acl_suggestions","Badges__enable_delete_badges"]]')
+  
+</script>
+    <devsite-a11y-announce></devsite-a11y-announce>
+  </body>
+
+<!-- Mirrored from codelabs.developers.google.com/secure-cloud-run-deployment by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 05 Mar 2023 16:37:48 GMT -->
+</html>

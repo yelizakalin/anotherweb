@@ -1,0 +1,730 @@
+<!DOCTYPE html><html lang="en">
+<!-- Mirrored from cognitiveclass.ai/courses/game-playing-ai-with-swift-for-tensorflow-s4tf by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 05 Mar 2023 16:36:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><meta charset="utf-8" /><meta content="IE=edge" http-equiv="X-UA-Compatible" /><meta content="width=device-width, initial-scale=1" name="viewport" /><meta content="Free courses, projects, and tutorials to learn Data Science, AI, Cloud, Containers, Serverless, Docker, Kubernetes, Quantum, DevOps, SRE and more..." name="description" /><meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="F7zkkp0hnmN1ypbOci1KZaGKtV4Y0vlAKzqsl8jq6ZJZdFRVHHYubx5BziNU5HopaBoVEf1/6pEZt+2DIs79uQ==" /><link href="https://s3.us-south.cloud-object-storage.appdomain.cloud/sn-portals-cognitiveclass/portals/favicons/5ebc/7166/a5ad/b600/013d/76aa/browser/favicon.png?1589431287" rel="icon" sizes="16x16" type="image/png" /><link href="https://s3.us-south.cloud-object-storage.appdomain.cloud/sn-portals-cognitiveclass/portals/favicons/5ebc/7166/a5ad/b600/013d/76aa/taskbar/favicon.png?1589431287" rel="icon" sizes="32x32" type="image/png" /><link href="https://s3.us-south.cloud-object-storage.appdomain.cloud/sn-portals-cognitiveclass/portals/favicons/5ebc/7166/a5ad/b600/013d/76aa/desktop/favicon.png?1589431287" rel="icon" sizes="96x96" type="image/png" /><link href="https://s3.us-south.cloud-object-storage.appdomain.cloud/sn-portals-cognitiveclass/portals/favicons/5ebc/7166/a5ad/b600/013d/76aa/touch/favicon.png?1589431287" rel="apple-touch-icon" /><title>Game-playing AI with Swift for TensorFlow (S4TF) | Free Courses in Data Science, AI, Cloud Computing, Containers, Kubernetes, Blockchain and more.</title><link rel="stylesheet" media="all" href="https://cognitiveclass.ai/packs/css/bdu-471169f8.css" /><style type="text/css">.container.blog {
+    /* my-12 */
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.container.blog .blog-post-title {
+    /* prose-lg */
+    font-size: 1.125rem;
+    line-height: 1.7777778;
+    
+    /* mx-auto */
+    margin-left: auto;
+    margin-right: auto;
+    
+    /* max-w-6xl */
+    max-width: 72rem;
+}
+
+.container.blog .blog-post-content {
+    /* prose */
+    color: #525252;
+    
+    /* prose-sm */
+    font-size: .875rem;
+    line-height: 1.7142857;
+    
+    /* mx-auto */
+    margin-left: auto;
+    margin-right: auto;
+    
+    /* max-w-6xl */
+    max-width: 72rem;
+}</style><!--Google Analytics--><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-1433936-18', 'auto');  // Replace with your property ID.
+ga('send', 'pageview');</script><script>var Portal={lmsUrl:"https://courses.cognitiveclass.ai",userLoggedIn:!1};window.Portal=Portal;</script><!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries--><!--WARNING: Respond.js doesn't work if you view the page via file://--><!--[if lt IE 9]><script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script><script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]--><!-- Include common assets here -->
+</head><body><div class="window-wrap flex flex-col h-screen" dir="ltr"><nav aria-label="main" x-data="{ mobileOpen: false }" class="header-global bg-white shadow-lg sticky top-0 z-30">
+  <div class="max-w-7xl mx-auto xl:px-0 px-8">
+    <div class="flex items-center justify-between h-20 xl:h-20">
+      <div class="flex items-center justify-evenly">
+        <div class="flex-shrink-0">
+          <a href="../index.html">
+            
+              <img class="h-12 w-auto" src="https://s3.us-south.cloud-object-storage.appdomain.cloud/sn-portals-cognitiveclass/portals/logos/5ebc/7166/a5ad/b600/013d/76aa/original/cc-logo.png?1589431217" alt="Cognitive Class logo" />
+            
+          </a>
+        </div>
+        <div class="hidden xl:block xl:m-6">
+          <div class="nav-global flex space-x-6">
+            
+  
+    
+      <a data-turbo="false" href="../courses.html"
+        class="header-item text-coolGray-400 hover:text-gray-700 inline-flex items-center md:pl-1 md:py-1 pl-3 py-2 whitespace-nowrap">Courses & Projects</a>
+    
+  
+
+  
+    
+      <a data-turbo="false" href="https://cognitiveclass.ai/badges"
+        class="header-item text-coolGray-400 hover:text-gray-700 inline-flex items-center md:pl-1 md:py-1 pl-3 py-2 whitespace-nowrap">Badges</a>
+    
+  
+
+  
+    
+      <a data-turbo="false" href="https://cognitiveclass.ai/learn"
+        class="header-item text-coolGray-400 hover:text-gray-700 inline-flex items-center md:pl-1 md:py-1 pl-3 py-2 whitespace-nowrap">Learning Paths</a>
+    
+  
+
+  
+    
+      <a href="https://skills.network/"
+        class="header-item text-coolGray-400 hover:text-gray-700 inline-flex items-center md:pl-1 md:py-1 pl-3 py-2 whitespace-nowrap"
+        target="_blank" rel="noreferrer noopener">Business</a>
+      
+  
+
+
+          </div>
+        </div>
+      </div>
+      <div class="hidden md:ml-6 md:block">
+        <div class="flex items-center">
+          <form x-data="init()" @keydown.window.slash="search()" class="search" action="https://cognitiveclass.ai/search" method="GET">
+  <div class="flex justify-end h-10">
+    <label htmlFor="search" class="sr-only">
+      Search
+    </label>
+    <div class="relative">
+      <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+            clip-rule="evenodd" />
+        </svg>
+      </div>
+    </div>
+    <input
+      class="block text-sm tracking-wide w-full md:w-96 bg-coolGray-100 border-coolGray-100 hover:placeholder-coolGray-400 hover:border-1 hover:border-coolGray-400 rounded pl-12 pr-3 placeholder-coolGray-300 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-gray-800 focus:border-gray-800"
+      type="search" x-ref="q" name="q" placeholder="Search for specific courses here" aria-label="Course searchbar" />
+  </div>
+</form>
+
+<script>
+  function init() {
+    return {
+      search() {
+        if (document.activeElement == document.body) {
+          setTimeout(() => {
+            this.$refs.q.focus()
+          }, 100)
+        }
+      }
+    }
+  }
+  window.init = init
+</script>
+
+          
+            <a data-turbo="false" id="login-btn" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-2 whitespace-nowrap" href="https://cognitiveclass.ai/login">Sign in</a>
+            
+              <a data-turbo="false" id="register-btn" class="inline-flex transition-colors items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue hover:bg-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap" href="https://cognitiveclass.ai/register">Register</a>
+            
+          
+        </div>
+      </div>
+      <div class="-mr-2 flex xl:hidden">
+        <!-- Mobile menu button -->
+        <button @click="mobileOpen = !mobileOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg x-show="!mobileOpen" x-cloak class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg x-show="mobileOpen" x-cloak class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div x-show="mobileOpen" x-cloak class="xl:hidden" id="mobile-menu">
+  <div class="px-2 pt-3 pb-3">
+    
+    <div class="space-y-2 mt-2 flex flex-col">
+  
+    
+      <a data-turbo="false" href="../courses.html"
+        class="header-item text-coolGray-400 hover:text-gray-700 inline-flex items-center md:pl-1 md:py-1 pl-3 py-2 whitespace-nowrap">Courses & Projects</a>
+    
+  
+
+  
+    
+      <a data-turbo="false" href="https://cognitiveclass.ai/badges"
+        class="header-item text-coolGray-400 hover:text-gray-700 inline-flex items-center md:pl-1 md:py-1 pl-3 py-2 whitespace-nowrap">Badges</a>
+    
+  
+
+  
+    
+      <a data-turbo="false" href="https://cognitiveclass.ai/learn"
+        class="header-item text-coolGray-400 hover:text-gray-700 inline-flex items-center md:pl-1 md:py-1 pl-3 py-2 whitespace-nowrap">Learning Paths</a>
+    
+  
+
+  
+    
+      <a href="https://skills.network/"
+        class="header-item text-coolGray-400 hover:text-gray-700 inline-flex items-center md:pl-1 md:py-1 pl-3 py-2 whitespace-nowrap"
+        target="_blank" rel="noreferrer noopener">Business</a>
+      
+  
+
+</div>
+  </div>
+  <div class="pt-4 pb-3 border-t border-gray-200">
+    
+    <div class="mt-3 space-y-1">
+      
+        
+          <div class="flex justify-end mx-4">
+            <a data-turbo="false" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" href="https://cognitiveclass.ai/login">Sign in</a>
+            
+              <a data-turbo="false" class="inline-flex transition-colors items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue hover:bg-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" href="https://cognitiveclass.ai/register">Register</a>
+            
+          </div>
+        
+      
+    </div>
+  </div>
+</div>
+
+</nav><turbo-frame id="flash"><div class="flash-messages">
+</div>
+</turbo-frame><main class="content-wrapper flex-grow" id="content"><!-- (parent container of the course detail page) -->
+<section aria-label="Game-playing AI with Swift for TensorFlow (S4TF) Info">
+
+  <!-- header section -->
+  <div class="relative">
+    <!-- image background -->
+    <div class="absolute inset-0">
+      <div class="h-full w-full bg-fixed bg-cover bg-center" style="background-image: url('https://courses.cognitiveclass.ai/asset-v1:CognitiveClass+AI0111EN+v1+type@asset+block@course_card.png')"></div>
+      <div class="absolute inset-0 bg-gray-900 lg:bg-transparent lg:bg-gradient-to-r lg:from-gray-900 lg:via-gray-800 lg:to-transparent mix-blend-multiply"></div>
+    </div>
+
+    <!-- course name and other primary details -->
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="px-4 py-16 sm:py-20 text-white space-y-8 max-w-2xl">
+        <h2>CognitiveClass</h2>
+        <h1 class="font-medium text-3xl">Game-playing AI with Swift for TensorFlow (S4TF)</h1>
+        <div class="leading-7 ">
+          <p class="line-clamp-2">In this course, you're going to learn how to accelerate machine learning model development with Google's new Swift for TensorFlow framework, by building AI agents to play games like Tic Tac Toe, Cartpole, and 2048.</p>
+          <a href="#about-course" class="underline font-semibold">Continue reading</a>
+        </div>
+        <div class="flex pb-4 divide-x space-x-2 items-center">
+          <p>AI0111EN</p>
+          <p class="pl-2">Artificial Intelligence</p>
+          
+          <span class="pl-2">803 Enrolled</span>
+          <span title="4.3 out of 5 stars" class="pl-2 flex justify-self-end justify-end text-sm gap-x-1">
+              <div class="flex items-center">
+    <svg class="h-4 text-yellow-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="none" stroke-width="1.5">
+  <path d="M10.5929 2.06748C11.0358 0.644172 12.9642 0.644172 13.4071 2.06748L14.9896 7.15291C15.1876 7.78944 15.7557 8.2204 16.3967 8.2204H21.5176C22.9509 8.2204 23.5468 10.1355 22.3873 11.0151L18.2443 14.1581C17.7258 14.5515 17.5088 15.2488 17.7069 15.8853L19.2893 20.9707C19.7322 22.394 18.1721 23.5776 17.0126 22.698L12.8696 19.555C12.3511 19.1616 11.6489 19.1616 11.1304 19.555L6.98742 22.698C5.8279 23.5776 4.26776 22.394 4.71066 20.9707L6.29312 15.8853C6.49119 15.2488 6.27421 14.5515 5.75565 14.1581L1.61272 11.0151C0.453193 10.1355 1.04911 8.2204 2.48237 8.2204H7.60331C8.24428 8.2204 8.81235 7.78944 9.01042 7.15291L10.5929 2.06748Z" fill="currentcolor"/>
+</svg>
+<svg class="h-4 text-yellow-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="none" stroke-width="1.5">
+  <path d="M10.5929 2.06748C11.0358 0.644172 12.9642 0.644172 13.4071 2.06748L14.9896 7.15291C15.1876 7.78944 15.7557 8.2204 16.3967 8.2204H21.5176C22.9509 8.2204 23.5468 10.1355 22.3873 11.0151L18.2443 14.1581C17.7258 14.5515 17.5088 15.2488 17.7069 15.8853L19.2893 20.9707C19.7322 22.394 18.1721 23.5776 17.0126 22.698L12.8696 19.555C12.3511 19.1616 11.6489 19.1616 11.1304 19.555L6.98742 22.698C5.8279 23.5776 4.26776 22.394 4.71066 20.9707L6.29312 15.8853C6.49119 15.2488 6.27421 14.5515 5.75565 14.1581L1.61272 11.0151C0.453193 10.1355 1.04911 8.2204 2.48237 8.2204H7.60331C8.24428 8.2204 8.81235 7.78944 9.01042 7.15291L10.5929 2.06748Z" fill="currentcolor"/>
+</svg>
+<svg class="h-4 text-yellow-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="none" stroke-width="1.5">
+  <path d="M10.5929 2.06748C11.0358 0.644172 12.9642 0.644172 13.4071 2.06748L14.9896 7.15291C15.1876 7.78944 15.7557 8.2204 16.3967 8.2204H21.5176C22.9509 8.2204 23.5468 10.1355 22.3873 11.0151L18.2443 14.1581C17.7258 14.5515 17.5088 15.2488 17.7069 15.8853L19.2893 20.9707C19.7322 22.394 18.1721 23.5776 17.0126 22.698L12.8696 19.555C12.3511 19.1616 11.6489 19.1616 11.1304 19.555L6.98742 22.698C5.8279 23.5776 4.26776 22.394 4.71066 20.9707L6.29312 15.8853C6.49119 15.2488 6.27421 14.5515 5.75565 14.1581L1.61272 11.0151C0.453193 10.1355 1.04911 8.2204 2.48237 8.2204H7.60331C8.24428 8.2204 8.81235 7.78944 9.01042 7.15291L10.5929 2.06748Z" fill="currentcolor"/>
+</svg>
+<svg class="h-4 text-yellow-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="none" stroke-width="1.5">
+  <path d="M10.5929 2.06748C11.0358 0.644172 12.9642 0.644172 13.4071 2.06748L14.9896 7.15291C15.1876 7.78944 15.7557 8.2204 16.3967 8.2204H21.5176C22.9509 8.2204 23.5468 10.1355 22.3873 11.0151L18.2443 14.1581C17.7258 14.5515 17.5088 15.2488 17.7069 15.8853L19.2893 20.9707C19.7322 22.394 18.1721 23.5776 17.0126 22.698L12.8696 19.555C12.3511 19.1616 11.6489 19.1616 11.1304 19.555L6.98742 22.698C5.8279 23.5776 4.26776 22.394 4.71066 20.9707L6.29312 15.8853C6.49119 15.2488 6.27421 14.5515 5.75565 14.1581L1.61272 11.0151C0.453193 10.1355 1.04911 8.2204 2.48237 8.2204H7.60331C8.24428 8.2204 8.81235 7.78944 9.01042 7.15291L10.5929 2.06748Z" fill="currentcolor"/>
+</svg>
+<svg class="h-4 text-yellow-300" viewBox="0 0 24 24" fill="none" xmlns="../../www.w3.org/2000/svg.html">
+  <path d="M11.309 2.29033C11.5332 1.56989 12.4668 1.56989 12.691 2.29033L14.2734 7.37575C14.5637 8.30853 15.4096 8.9704 16.3967 8.9704H21.5176C21.8519 8.9704 22.1059 9.18076 22.2086 9.51072C22.3119 9.84268 22.2268 10.1955 21.934 10.4176L17.7911 13.5606C17.0128 14.151 16.7019 15.1799 16.9907 16.1081L18.5732 21.1936C18.6934 21.58 18.547 21.912 18.2986 22.1004C18.0549 22.2853 17.7469 22.3136 17.4659 22.1004L13.3229 18.9575C12.5364 18.3608 11.4636 18.3608 10.6771 18.9575L6.53413 22.1004C6.2531 22.3136 5.94508 22.2853 5.70143 22.1004C5.45298 21.912 5.30656 21.58 5.42679 21.1936L7.00925 16.1081C7.29809 15.1799 6.98718 14.151 6.20895 13.5606L2.06601 10.4176C1.77323 10.1955 1.68808 9.84268 1.79138 9.51072C1.89405 9.18076 2.14809 8.9704 2.48237 8.9704H7.60331C8.59041 8.9704 9.4363 8.30853 9.72655 7.37575L11.309 2.29033Z" stroke="#DDE1E6" stroke-width="1.5"/>
+  <path d="M12 1C11.4072 1 10.8143 1.35583 10.5929 2.06748L9.01042 7.15291C8.81235 7.78944 8.24428 8.2204 7.60331 8.2204H2.48237C1.04911 8.2204 0.453193 10.1355 1.61272 11.0151L5.75565 14.1581C6.27421 14.5515 6.49119 15.2488 6.29312 15.8853L4.71066 20.9707C4.26776 22.394 5.8279 23.5776 6.98742 22.698L11.1304 19.555C11.3896 19.3583 11.6948 19.2599 12 19.2599V1Z" fill="currentcolor"/>
+</svg>
+
+  </div>
+ <span class="text-coolGray-200">(39)</span>
+          </span>
+        </div>
+
+        
+
+        <!-- course enrollment closing soon warning -->
+        
+
+        <div class="flex flex-row items-center space-x-4">
+          <div>
+            
+  <a data-turbo="false" href="https://cognitiveclass.ai/login?next=/courses/course-v1:CognitiveClass+AI0111EN+v1/auto_enroll" class="flex w-max py-2 px-20 rounded-md border-2 border-white tracking-wide text-white hover:bg-coolGray-100 hover:text-blue text-lg font-medium">Login to enroll</a>
+
+
+          </div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- body section -->
+  <div class="max-w-7xl mx-auto sm:px-6 pb-8 mb-16 sm:my-16">
+    <div id="about-course" class="block relative invisible -top-32"></div>
+    <div class="flex flex-col-reverse md:flex-row justify-between md:space-x-16">
+      <!-- About this course -->
+      <div class="sm:col-span-2 px-8 sm:px-0 prose max-w-none">
+        <div class="prose max-w-none mt-8">
+          <h1>At a Glance</h1>
+          <p>In this course, you're going to learn how to accelerate machine learning model development with Google's new Swift for TensorFlow framework, by building AI agents to play games like Tic Tac Toe, Cartpole, and 2048.</p>
+          <h2>ABOUT THIS COURSE</h2>
+
+<p>Machine learning technology is one of the most exciting innovations of the past few years. It enables cars to drive themselves, and oncologists to diagnose cancer faster. However, from an implementation standpoint, machine learning has traditionally been difficult. This is because machine learning simply has different needs from other types of technologies - and programming languages, the infrastructure with which technology is built, weren't designed with these special needs in mind.</p>
+
+<p>However, Swift is the perfect language for the future of machine learning. The compiler is developed in a modular paradigm, and it has 2 intermediate stages in which code can be modified or injected. With Swift for TensorFlow, Google is showing their commitment to the world of machine learning. They're integrating machine learning capabilities directly into the Swift language compiler. This enables you to write code naturally, and run tasks like automatic differentiation. You can even use Swift's Control Flow (if, if-let, and guard statements, for/while loops, etc.)!</p>
+
+<p>All in all, this means that you'll be able to train machine learning models, faster, with less and simpler code, enabling a lower barrier of entry into this world. You'll build a minimax agent for Tic Tac Toe, a Reinforcement Learning agent for Cartpole, and a Monte Carlo Tree Search agent for 2048! Upon completing this course, you'll be able to understand the ideas behind Swift for TensorFlow, the basics of machine learning, and how AI agents are built to play games.</p>
+
+<hr />
+<h2>COURSE SYLLABUS</h2>
+
+<p><strong>Module 1 - Set up your environment</strong></p>
+
+<ul>
+	<li>Signing up for an IBM Cloud Account</li>
+	<li>Installing Swift for TensorFlow</li>
+</ul>
+
+<p><strong>Module 2 - Understanding Swift's basics</strong></p>
+
+<ul>
+	<li data-node-type="line">Why Swift &amp; Swift for TensorFlow?</li>
+	<li data-node-type="line">Server-side Swift</li>
+</ul>
+
+<p><strong>Module 3 - Tic Tac Toe (Minimax)</strong></p>
+
+<ul>
+	<li data-node-type="line" id="magicdomid25"> Why &amp; how does minimax work?</li>
+	<li data-node-type="line" id="magicdomid26"> Lab: Implementing Minimax in Swift</li>
+</ul>
+
+<p><strong>Module 4 - Cartpole (Reinforcement Learning)</strong></p>
+
+<ul>
+	<li>What is Reinforcement Learning (RL)?</li>
+	<li>Lab: Implementing RL for Cartpole in Swift with OpenAI Gym</li>
+</ul>
+
+<p><strong>Module 5 - 2048 (Monte Carlo Tree Search)</strong></p>
+
+<ul>
+	<li data-node-type="line" id="magicdomid31">Using the pre-built 2048 game</li>
+	<li data-node-type="line" id="magicdomid32">Why &amp; how does Monte Carlo Tree Search (MCTS) work?</li>
+	<li data-node-type="line" id="magicdomid33">Lab: Implementing MCTS for 2048 in Swift</li>
+	<li data-node-type="line" id="magicdomid34">Creating a Swift Runtime service instance on IBM Cloud</li>
+	<li data-node-type="line" id="magicdomid35">Lab 4 - Deploying the AI-powered 2048 web app</li>
+</ul>
+
+<hr />
+<h2>GENERAL INFORMATION</h2>
+
+<ul>
+	
+	<li>This course is self-paced.</li>
+	<li>It can be taken at any time.</li>
+	<li>It can be audited as many times as you wish.</li>
+	<li>There is only <strong>ONE</strong> chance to pass the course, but multiple attempts per question</li>
+</ul>
+
+<hr />
+<h2>RECOMMENDED SKILLS PRIOR TO TAKING THIS COURSE</h2>
+
+<ul>
+	<li> Basic Math</li>
+</ul>
+
+<hr />
+<h2>COURSE STAFF</h2>
+
+<article>
+<p><img alt="" src="https://skills-network-assets.s3.us.cloud-object-storage.appdomain.cloud/Tanmay Bakshi pic.png" />
+</p></article>
+
+<p><a href="https://www.linkedin.com/in/tanmay-bakshi-b15012a1/">Tanmay Bakshi</a> is a 16-year-old Canadian author, AI and ML Systems Architect, TED &amp; Keynote speaker, Google Developer Expert for Machine Learning, and IBM Champion for Cloud. He has addressed over 200,000 executives, developers, and various audiences worldwide at conferences, universities &amp; schools, financial institutions, and international companies. The United Nations, NASSCOM, Linux Foundation, Apple, SAP, IBM and Walmart are a few of the organizations he has keynoted for.</p>
+
+<p> </p>
+
+        </div>
+      </div>
+
+
+      <div class="flex flex-col">
+        <div class="bg-coolGray-100 mb-8 sm:mb-0 rounded-lg w-full md:w-96 p-12 divide-y">
+          <div class="space-y-8 mb-8">
+            
+            
+              <!-- EFFORT METADATA -->
+              
+                <div>
+                  <p class="text-coolGray-400 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-coolGray-400" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Estimated Effort
+                  </p>
+                  <p class="mt-2">4 hours</p>
+                </div>
+              
+              <!-- DIFFICULTY METADATA -->
+              
+                <div>
+                  <p class="text-coolGray-400 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-coolGray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                      <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                    </svg>
+                    Level
+                  </p>
+                  <p class="mt-2">Beginner</p>
+                </div>
+              
+              <!-- INDUSTRY METADATA -->
+              
+              <!-- SKILLS METADATA -->
+              
+                <div>
+                  <p class="text-coolGray-400 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-coolGray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                    Skills You Will Learn
+                  </p>
+                  <p class="mt-2">Data Science</p>
+                </div>
+              
+              <!-- LANGUAGE METADATA -->
+              
+                <div>
+                  <p class="text-coolGray-400 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-coolGray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                    Language
+                  </p>
+                  <p class="mt-2">English</p>
+                </div>
+              
+              <!-- OTHER METADATA -->
+              
+            
+            <div>
+  <p class="text-coolGray-400 flex items-center capitalize">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+    </svg>
+    Tell Your Friends!
+  </p>
+
+  <div class="flex space-x-4 mt-2">
+    <!-- TWITTER -->
+    <a href="http://twitter.com/share?text=Check%20out%20this%20Course%20on%20Cognitive%20Class!&amp;url=https://cognitiveclass.ai/courses/course-v1:CognitiveClass+AI0111EN+v1" aria-label="Share on Twitter">
+      <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6 text-coolGray-400">
+        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+      </svg>
+    </a>
+
+    <!-- LINKEDIN -->
+    <a href="https://www.linkedin.com/sharing/share-offsite?url=https://cognitiveclass.ai/courses/course-v1:CognitiveClass+AI0111EN+v1" aria-label="Share on LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6 text-coolGray-400">
+        <path d="M21.7985 1C22.7363 1 23.5 1.71022 23.5 2.58625V21.4125C23.5 22.2886 22.7363 23 21.7985 23H2.19647C1.26052 23 0.5 22.2886 0.5 21.4125V2.58625C0.5 1.71022 1.26052 1 2.19647 1H21.7985ZM20.0996 19.7463V13.9885C20.0996 11.1609 19.4613 8.98704 16.0072 8.98704C14.3475 8.98704 13.2344 9.85751 12.7795 10.6828H12.7328V9.24756H9.46278V19.7463H12.8701V14.5536C12.8701 13.184 13.1409 11.8571 14.916 11.8571C16.6666 11.8571 16.6885 13.4233 16.6885 14.6408V19.7463H20.0996V19.7463ZM7.32272 9.2476H3.90789V19.7463H7.32269V9.2476H7.32272ZM5.61619 4.02868C4.52055 4.02868 3.6371 4.87643 3.6371 5.92084C3.6371 6.9655 4.52055 7.81322 5.61619 7.81322C6.7075 7.81322 7.59348 6.9655 7.59348 5.92084C7.59348 4.87647 6.7075 4.02868 5.61619 4.02868Z" fill="#697077"/>
+      </svg>
+    </a>
+
+    <!-- FACEBOOK -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://cognitiveclass.ai/courses/course-v1:CognitiveClass+AI0111EN+v1" aria-label="Share on Facebook">
+      <svg width="24" height="24" viewBox="0 0 24 24" class="h-6 w-6 text-coolGray-400">
+        <path d="M17.6482 13.398L18.3219 9.08737H14.1073V6.29C14.1073 5.11067 14.696 3.96114 16.5838 3.96114H18.5V0.291294C18.5 0.291294 16.7609 0 15.0984 0C11.6272 0 9.35848 2.06447 9.35848 5.80196V9.08737H5.5V13.398H9.35848V23.8188C10.1321 23.9379 10.9251 24 11.7329 24C12.5407 24 13.3336 23.9379 14.1074 23.8188V13.398H17.6482Z" fill="#697077"/>
+      </svg>
+    </a>
+
+    <!-- COPY TO CLIPBOARD -->
+    <div x-data="{copied: false}">
+      <button x-show="!copied" title="Copy to clipboard" type="button" @click="navigator.clipboard.writeText(window.location.href); copied = true;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-coolGray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+        </svg>
+      </button>
+
+      <button type="button" title="Copied to clipboard">
+        <svg x-show="copied" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg>
+      </button>
+
+      <!-- Notification -->
+      <div aria-live="assertive" class="fixed top-20 inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start">
+        <div class="w-full flex flex-col items-center space-y-4 sm:items-end">
+          <div
+            x-show="copied"
+            x-transition:enter="transform ease-out duration-300 transition"
+            x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+            x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+            x-transition:leave="transition ease-in duration-100"
+            x-transition:leave-start="opacity-100"
+            x-tenasition:leave-end="opacity-0"
+            class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
+            <div class="p-4">
+              <div class="flex items-start">
+                <div class="flex-shrink-0">
+                  <!-- Heroicon name: outline/check-circle -->
+                  <svg class="h-6 w-6 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="ml-3 w-0 flex-1 pt-0.5">
+                  <p class="text-sm font-medium text-gray-900">
+                    Saved this page to your clipboard!
+                  </p>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex">
+                  <button @click="copied = false;" class="bg-white rounded-md inline-flex text-coolGray-300 hover:text-coolGray-400">
+                    <span class="sr-only">Close</span>
+                    <!-- Heroicon name: solid/x -->
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+          <div>
+            
+  <a data-turbo="false" href="https://cognitiveclass.ai/login?next=/courses/course-v1:CognitiveClass+AI0111EN+v1/auto_enroll" class="flex w-full justify-center mt-8 py-2 px-16 rounded-md border-2 border-blue tracking-wide text-blue hover:bg-blue hover:text-white font-medium">Login to enroll</a>
+
+
+
+            
+          </div>
+        </div>
+
+        <div class="flex flex-col mt-0 sm:mt-8 px-2 w-full md:w-96 pb-8">
+          
+          
+          <div class="space-y-6">
+          
+            <h2 class="text-gray-700 font-semibold mb-2">Instructors</h2>
+            <div class="space-y-4 flex flex-col">
+            
+              <a href="https://author.skills.network/instructors/tanmay_bakshi" target="_blank" class="focus:outline-none">
+                <div class="relative rounded-lg bg-white px-6 py-5 shadow flex items-start space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                  <div class="flex-shrink-0">
+                  <img
+                    class="rounded-full h-12 w-12 flex items-center justify-start bg-white object-cover"
+                    src="https://author-workbench-prod.s3.us.cloud-object-storage.appdomain.cloud/l0awvwpcgh6ur8sn0ot9tvrs56dd"
+                  />
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <span class="absolute inset-0" aria-hidden="true"></span>
+                    <p class="text-sm font-medium text-gray-900">Tanmay Bakshi</p>
+                    <p class="text-sm text-gray-500 truncate"></p>
+                    <p class="text-sm line-clamp-2 text-gray-900">Tanmay Bakshi is a 16-year-old Canadian author, AI and ML Systems Architect, TED & Keynote speaker, Google Developer Expert for Machine Learning, and IBM Champion for Cloud. He has addressed over 200,000 executives, developers, and various audiences worldwide at conferences, universities & schools, financial institutions, and international companies. The United Nations, NASSCOM, Linux Foundation, Apple, SAP, IBM and Walmart are a few of the organizations he has keynoted for.</p>
+                    <span
+                      class="text-blue mt-1 text-xs font-light cursor-pointer hover:text-coolGray-300 underline"
+                    >
+                      Read more
+                    </span>
+                  </div>
+                </div>
+              </a>
+            
+            </div>
+          
+          
+            <h2 class="text-gray-700 font-semibold mb-2">Contributors</h2>
+            <div class="space-y-4 flex flex-col">
+            
+              <a href="https://author.skills.network/instructors/artem_arutyunov" target="_blank" class="focus:outline-none">
+                <div class="relative rounded-lg bg-white px-6 py-5 shadow flex items-start space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                  <div class="flex-shrink-0">
+                  <img
+                    class="rounded-full h-12 w-12 flex items-center justify-start bg-white object-cover"
+                    src="https://author-workbench-prod.s3.us.cloud-object-storage.appdomain.cloud/t4cntbdui1cmth8tl61r1hgfxyp2"
+                  />
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <span class="absolute inset-0" aria-hidden="true"></span>
+                    <p class="text-sm font-medium text-gray-900">Artem Arutyunov</p>
+                    <p class="text-sm text-gray-500 truncate">Data Scientist </p>
+                    <p class="text-sm line-clamp-2 text-gray-900">Hey, Artem here!
+I am excited about answering new challenges with data science, machine learning and especially Reinforcement Learning. 
+Love helping people to learn, and learn myself.  
+Studying Math and Stats at University of Toronto, hit me up if you are from there as well. 
+</p>
+                    <span
+                      class="text-blue mt-1 text-xs font-light cursor-pointer hover:text-coolGray-300 underline"
+                    >
+                      Read more
+                    </span>
+                  </div>
+                </div>
+              </a>
+            
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- TODO: class start time, pacing -->
+  </div>
+</section>
+</main><footer class="wrapper-footer bg-coolGray-100" aria-labelledby="footer-heading">
+  <h2 id="footer-heading" class="sr-only">Footer</h2>
+  <div class="footer-body max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:py-16 lg:px-8">
+    <div class="sm:grid sm:grid-cols-2 sm:gap-8 text-center sm:text-left">
+      <div class="flex justify-center sm:justify-start items-center mt-2 gap-8 xl:mt-0">
+        
+
+
+
+<ul role="list" class="md:grid md:grid-rows-3 md:grid-flow-col md:gap-8 space-y-4 md:space-y-0">
+  
+    <li class="text-base text-coolGray-400 hover:text-gray-900">
+      <a href="https://cognitiveclass.ai/privacy">Privacy Notice</a>
+    </li>
+  
+  
+    <li class="text-base text-coolGray-400 hover:text-gray-900">
+      <a href="https://cognitiveclass.ai/legal">Terms of Service</a>
+    </li>
+  
+  
+    <li class="text-base text-coolGray-400 hover:text-gray-900">
+      <a href="https://cognitiveclass.ai/contact">Contact</a>
+    </li>
+  
+    <li class="text-base text-coolGray-400 hover:text-gray-900">
+      <a href="https://cognitiveclass.ai/faq">FAQ</a>
+    </li>
+  
+    <li class="text-base text-coolGray-400 hover:text-gray-900">
+      <a href="https://www.facebook.com/cognitiveclass">Facebook</a>
+    </li>
+  
+    <li class="text-base text-coolGray-400 hover:text-gray-900">
+      <a href="https://twitter.com/cognitiveclass">Twitter</a>
+    </li>
+  
+    <li class="text-base text-coolGray-400 hover:text-gray-900">
+      <a href="https://www.linkedin.com/school/cognitiveclass/">LinkedIn</a>
+    </li>
+  
+    <li class="text-base text-coolGray-400 hover:text-gray-900">
+      <a href="https://www.youtube.com/user/TheBigDataUniversity">YouTube</a>
+    </li>
+  
+</ul>
+
+      </div>
+      <div class="space-y-8 xl:col-span-1 justify-self-end self-center mt-8 sm:mt-12 xl:mt-0">
+        
+        <div class="text-sm text-coolGray-400 text-center flex items-center justify-center">
+          <p class="md:mr-5 mr-3">Powered by</p>
+          <a class="font-normal contents">
+            <img class="mx-0" alt="organization logo" src="https://cognitiveclass.ai/assets/cc/sn-logo-6391428625e78398966069f175e8ff8d144be13864a43931dc1f36bd5ba3f960.svg" alt="Skills Network Logo" style="height: 50px">
+          </a>
+        </div>
+        
+      </div>
+    </div>
+    
+      <div class="mt-12 border-t border-gray-200 pt-8">
+      
+        <p class="text-base text-coolGray-400 xl:text-center">
+           
+        </p>
+      
+      
+        
+  <div class="cookie-banner">
+    <div x-data="{show: false}">
+      <button class="btn text-coolGray-400 hover:text-gray-900" @click="show=true" data-toggle="modal" data-target="#cookie-info-modal"> Cookie Preferences </button>
+      <template x-if="true">
+        <div x-show="show" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+          <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <div class="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+              <div class="sm:flex sm:items-start">
+                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                  <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                  </svg>
+                </div>
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title"> Cookie Preferences <h3>
+                  <div class="mt-2">
+                    <p class="text-sm text-gray-500"><h2>I consent to allow CognitiveClass.ai to use cookies to capture product usage analytics. The data from these cookies will only be used for product usage on CognitiveClass.ai domains, and this usage data will not be shared outside of CognitiveClass.ai. The product usage will be used for business reporting and product usage understanding.</h2>
+</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <button @click.away="show=false" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm" href="https://cognitiveclass.ai/nocookies"> I agree</button>
+                <button @click.away="show=false" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">  I do not agree </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+
+      
+      </div>
+    
+  </div>
+</footer>
+<script>// UserVoice JavaScript SDK (only needed once on a page) 
+(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='http://cognitiveclass.uservoice.com/widget_environment/sjqLUQN6ti1Ez9rXdGDoEA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+// A tab to launch the Classic Widget
+UserVoice = window.UserVoice || [];
+UserVoice.push(['showTab', 'classic_widget', {
+  mode: 'full',
+  primary_color: '#1a3f57',
+  link_color: '#0a8cc6',
+  default_mode: 'support',
+  forum_id: 317580,
+  tab_label: 'Support',
+  tab_color: '#1a3f57',
+  tab_position: 'middle-right',
+  tab_inverted: false
+}]);
+</script></div><script src="https://cognitiveclass.ai/assets/bdu-ba0907f17af4588a2a678d8b2713d648d9116402831e41a1928f794d15f4418d.js"></script><script src="https://cognitiveclass.ai/packs/js/bdu-aa8ab955c41f35178ef5.js"></script><script src="https://cognitiveclass.ai/assets/check_open_edx_login-5fde36f0510a0f30c5ac292275611167a74647f48910c6ee5efeb41c31e6288e.js"></script><script>
+(function() {
+    if(window.location.pathname.startsWith('/blog')) {
+        return window.location = 'https://cognitiveclass.ai/courses?type%5B%5D=guided_project&amp;sort%5B%5D=most_popular'
+    }
+})();
+</script></body>
+<!-- Mirrored from cognitiveclass.ai/courses/game-playing-ai-with-swift-for-tensorflow-s4tf by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 05 Mar 2023 16:36:46 GMT -->
+</html>
